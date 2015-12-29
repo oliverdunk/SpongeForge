@@ -73,6 +73,7 @@
         "fml.common.registry.MixinEntityRegistry",
         "forge.MixinBlockSnapshot",
         "forge.MixinDimensionManager",
+        "forge.MixinFakePlayer",
         "forge.MixinForgeHooks",
         "forge.event.MixinForgeEventFactory",
         "item.MixinEnchantment",

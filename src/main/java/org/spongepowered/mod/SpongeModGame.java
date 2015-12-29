@@ -27,19 +27,24 @@ package org.spongepowered.mod;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.inject.Singleton;
+import com.mojang.authlib.GameProfile;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.api.GameDictionary;
 import org.spongepowered.api.GameState;
 import org.spongepowered.api.Platform;
+import org.spongepowered.api.event.EventManager;
 import org.spongepowered.api.plugin.PluginManager;
 import org.spongepowered.api.service.ServiceManager;
-import org.spongepowered.api.event.EventManager;
 import org.spongepowered.api.util.annotation.NonnullByDefault;
 import org.spongepowered.api.world.TeleportHelper;
 import org.spongepowered.common.SpongeGame;
 import org.spongepowered.common.network.SpongeNetworkManager;
 import org.spongepowered.common.registry.SpongeGameRegistry;
+import org.spongepowered.common.world.FakePlayer;
 import org.spongepowered.mod.network.SpongeModNetworkManager;
 import org.spongepowered.mod.registry.SpongeGameDictionary;
 
@@ -83,6 +88,17 @@ public final class SpongeModGame extends SpongeGame {
     @Override
     public SpongeNetworkManager getChannelRegistrar() {
         return this.networkManager;
+    }
+
+    @Override
+    public FakePlayer.Factory createFakePlayerFactory() {
+        return new FakePlayer.Factory() {
+
+            @Override
+            public EntityPlayerMP getPlayer(WorldServer world, GameProfile profile) {
+                return FakePlayerFactory.get(world, profile);
+            }
+        };
     }
 
 }
